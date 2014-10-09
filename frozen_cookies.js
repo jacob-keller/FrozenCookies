@@ -2,7 +2,7 @@
 var scriptElement = document.getElementById( 'frozenCookieScript' ),
 	baseUrl = scriptElement !== null ?
 		scriptElement.getAttribute('src').replace(/\/frozen_cookies\.js$/, '') :
-		'http://icehawk78.github.io/FrozenCookies/',
+		'http://jacob-keller.github.io/FrozenCookies/',
 	FrozenCookies = {
 		'baseUrl': baseUrl,
 		'branch' : 'G',
