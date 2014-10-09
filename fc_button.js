@@ -329,7 +329,7 @@ function FCMenu() {
       return Game.oldUpdateMenu();
     }
     var currentCookies, maxCookies, isTarget, isMax, targetTxt, maxTxt,
-      currHC, resetHC, cps, baseChosen, frenzyChosen, clickStr, buildTable,
+      currHC, resetHC, gainedHC, cps, baseChosen, frenzyChosen, clickStr, buildTable,
       bankLucky, bankLuckyFrenzy, bankChain,
       menu = $('#menu').html('')
         .append($('<div>').addClass('section').html('Frozen Cookies v ' + FrozenCookies.branch + '.' + FrozenCookies.version)),
@@ -403,7 +403,9 @@ function FCMenu() {
     subsection.append($('<div>').addClass('title').html('Heavenly Chips Information'));
     currHC = Game.prestige['Heavenly chips'];
     resetHC = Game.HowMuchPrestige(Game.cookiesReset + Game.cookiesEarned + wrinklerValue() + chocolateValue());
+    gainedHC = resetHC - currHC;
     subsection.append($('<div>').addClass('listing').html('<b>HC Now:</b> ' + Beautify(Game.prestige['Heavenly chips'])));
+    subsection.append($('<div>').addClass('listing').html('<b>HC Gained By Reset:</b> ' + Beautify(gainedHC)));
     subsection.append($('<div>').addClass('listing').html('<b>HC After Reset:</b> ' + Beautify(resetHC)));
     subsection.append($('<div>').addClass('listing').html('<b>Cookies to next HC:</b> ' + Beautify(nextHC(true))));
     subsection.append($('<div>').addClass('listing').html('<b>Estimated time to next HC:</b> ' + nextHC()));
@@ -420,6 +422,15 @@ function FCMenu() {
         subsection.append($('<div>').addClass('listing').html('<b>Previous Average HC Gain/hr:</b> ' + Beautify(60 * 60 *(FrozenCookies.lastHCAmount - 1 - currHC)/((FrozenCookies.prevLastHCTime - Game.startDate)/1000))));
       }
     }
+    menu.append(subsection);
+
+    subsection = $('<div>').addClass('subsection');
+    subsection.append($('<div>').addClass('title').html('Estimated Efficient Reset Information'));
+    subsection.append($('<div>').addClass('listing').html('<b>Reset Cookies Value (in trillions):</b> ' + Beautify(estimatedResetCookiesValue())));
+    subsection.append($('<div>').addClass('listing').html('<b>Reset Heavenly Chips Value:</b> ' + Beautify(estimatedResetHCValue(gainedHC))));
+    subsection.append($('<div>').addClass('listing').html('<b>HC to earn before reset:</b> ' + Beautify(estimatedHCBeforeReset()-gainedHC)));
+
+    subsection.append($('<div>').addClass('listing').html('<b>Reset is Efficient?:</b> ' + resetEffective()));
     menu.append(subsection);
     
     // Other Information
